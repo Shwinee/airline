@@ -7,7 +7,7 @@ function Camera() {
     this.offx = 0;
     this.offy = 0;
 
-    this.max_speed = 1.5;
+    this.max_speed = 2;
     this.min_speed = 0.3;
 
     this.dx = 0;
@@ -30,7 +30,7 @@ function Camera() {
     }
 
     this.update = function() {
-        translate(-this.x, -this.y)
+        translate(this.x, this.y)
 
         this.dx *= this.friction;
         this.dy *= this.friction;
@@ -41,24 +41,24 @@ function Camera() {
         this.cenx = (width/2) - this.x;
         this.ceny = (height/2) - this.y;
         
-        this.mx = mouseX - -this.x;
-        this.my = mouseY - -this.y;
+        this.mx = mouseX - this.x;
+        this.my = mouseY - this.y;
 
         if (this.controller == "wasd") {
             if (keyIsDown(65)) {
-                this.addForce(-1, 0);
-            }
-        
-            if (keyIsDown(68)) {
                 this.addForce(1, 0);
             }
         
+            if (keyIsDown(68)) {
+                this.addForce(-1, 0);
+            }
+        
             if (keyIsDown(87)) {
-                this.addForce(0, -1);
+                this.addForce(0, 1);
             }
         
             if (keyIsDown(83)) {
-                this.addForce(0, 1);
+                this.addForce(0, -1);
             }
         }
 
