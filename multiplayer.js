@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3000", {
+const socket = io("https://bot-so-i-am-cool.herokuapp.com/", {
   extraHeaders: {
     "my-custom-header": "abcd"
   }
