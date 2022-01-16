@@ -2,7 +2,7 @@ function setup() {
     createCanvas(innerWidth, innerHeight);
     let o;
     cam.controller = "wasd"
-    
+
     scene.add(new Enemy(51252461, 31463463463122345, 123192492521512358));
     
     scene.add(new Empty(-(width*15), -height-height, width*30, height));
@@ -33,8 +33,8 @@ function setup() {
 }
 
 function preload() {
-    add_sprites(['/sprites/ground.png', '/sprites/grass.png', '/sprites/grass_4.png', '/sprites/bottom.png', '/sprites/grass_1.png', '/sprites/grass_2.png', '/sprites/grass_3.png', '/sprites/corner_lr.png', '/sprites/corner_rl.png'])
-    add_sounds(['/sprites/boom.wav', '/sprites/locked.wav', '/sprites/flying.wav', '/sprites/grapple.wav', '/sprites/hurt.wav'])
+    add_sprites(['sprites/ground.png', 'sprites/grass.png', 'sprites/grass_4.png', 'sprites/bottom.png', 'sprites/grass_1.png', 'sprites/grass_2.png', 'sprites/grass_3.png', 'sprites/corner_lr.png', 'sprites/corner_rl.png'])
+    add_sounds(['sprites/boom.wav', 'sprites/locked.wav', 'sprites/flying.wav', 'sprites/grapple.wav', 'sprites/hurt.wav'])
 }
 
 function draw() {
