@@ -5,9 +5,6 @@ function Player() {
     this.w = 32;
     this.h = 32;
 
-    this.min_speed = 0.2;
-    this.max_speed = 0.35;
-
     this.shot_time = 0;
 
     this.grap_deployed = false;
@@ -16,8 +13,11 @@ function Player() {
 
     this.range = 2000;
 
+    this.multiplayer_id = undefined;
+
     this.render = function() {
-        fill(205, 10, 30);
+        sendPlayerData();
+        fill(0, 0, 0);
         rect(this.x, this.y, this.w, this.h);
         
         let r = new Ray(this.x+(this.w/2), this.y+(this.h/2), true, [this]);
@@ -35,59 +35,42 @@ function Player() {
 
         if (this.shot == true) {
             this.grap_deployed = true;
-            if (keyIsDown(32)) {
-                this.min_speed = 0.4;
-                this.max_speed = 0.6;
-            }else {
-                this.min_speed = 0.2;
-                this.max_speed = 0.35;
-            }
-            
-            noFill();
-            beginShape();
-            curveVertex(this.x+(this.w/2), this.y+(this.h/2));
-            curveVertex(this.shot_pos_x, this.shot_pos_y);
-            endShape();
             
             stroke(255, 255, 255);
             line(this.x+(this.w/2), this.y+(this.h/2), this.shot_pos_x, this.shot_pos_y)
             stroke(0, 0, 0);
-
-            ellipse(this.shot_pos_x, this.shot_pos_y, 10, 10);
 
             let v1 = createVector(this.shot_pos_x, this.shot_pos_y);
             let v2 = createVector(this.x, this.y);
             let v3 = p5.Vector.sub(v1, v2);
 
             v3.normalize();
-            
-            v3.mult(0.5);
+            // if (keyIsDown(32)) { 
+            //     v3.mult(1);
+            // }else {
+                v3.mult(0.5);
+            // }
 
-            this.addForce(v3.x, v3.y*1.5)
-
-            // if (this.x < this.shot_pos_x) {
-            //     this.addForce(map(dist(this.x+(this.w/2), this.y+(this.h/2), this.shot_pos_x, this.shot_pos_y), 3000, 500, this.min_speed, this.max_speed, true), 0);
-            // }
-            // if (this.x > this.shot_pos_x) {
-            //     this.addForce(-map(dist(this.x+(this.w/2), this.y+(this.h/2), this.shot_pos_x, this.shot_pos_y), 3000, 500, this.min_speed, this.max_speed, true), 0);
-            // }
-            // if (Math.abs(this.y - this.shot_pos_y) >= 300) {
-            //     if (this.y > this.shot_pos_y) {
-            //         this.addForce(0, -map(dist(this.x+(this.w/2), this.y+(this.h/2), this.shot_pos_x, this.shot_pos_y), 3000, 500, this.min_speed, this.max_speed*1.5, true));
-            //     }
-            //     if (this.y < this.shot_pos_y) {
-            //         this.addForce(0, map(dist(this.x+(this.w/2), this.y+(this.h/2), this.shot_pos_x, this.shot_pos_y), 3000, 500, this.min_speed, this.max_speed*1.5, true));
-            //     }
-            // }
+            this.addForce(v3.x, v3.y*1.1)
         }
     }
 
     this.shot = false;
     this.shot_pos_x = undefined;
     this.shot_pos_y = undefined;
+    this.shot_object_id = undefined;
 
     this.shoot = function(x, y) {
         if (this.shot == true) {
+            let obj = scene.data[scene.getFromId(this.shot_object_id)];
+            if (obj != undefined) {
+                if (obj.addForce) {
+                    this.shot_pos_x = obj.x;
+                    this.shot_pos_y = obj.y;
+                }
+            }else {
+                this.shot = false;
+            }
             return;
         }
         let r = new Ray(this.x+(this.w/2), this.y+(this.h/2), true, [this]);
@@ -97,10 +80,24 @@ function Player() {
             return;
         }
         if (dist(this.x, this.y, c.x, c.y) <= this.range) {
+            sounds.grapple.play();
             this.shot_pos_x = c.x;
             this.shot_pos_y = c.y;
+            this.shot_object_id = scene.data[c.index].ENGINE_INFO.id;
             this.shot = true;
             this.shot_time = 0;
+
+            for (let i = 0; i < 3; i++) {
+                scene.add(new Particle(this.shot_pos_x, this.shot_pos_y, (p) => {
+                    p.dx += random(-0.3, 0.3);
+                    p.dy += random(0, 1);
+                    p.color = [165,42,42]
+                }, (p) => {
+                    if (p.lifetime >= 30) {
+                        p.remove();
+                    }
+                }))
+            }
         }
     }
 }

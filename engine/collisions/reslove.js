@@ -17,26 +17,26 @@ function resolve_rect(rect1, rect2) {
       if (vector_y > 0) {
         return_obj.dir = "bellow";
         return_obj.x = rect1.x;
-        return_obj.y = (rect2.y+rect2.h);
+        return_obj.y = (rect2.y+rect2.h)+1;
         
         return return_obj
       }else {
         return_obj.dir = "above";
         return_obj.x = rect1.x;
-        return_obj.y = (rect2.y-rect1.h);
+        return_obj.y = (rect2.y-rect1.h)-1;
 
         return return_obj
       }
     }else {
       if (vector_x > 0) {
         return_obj.dir = "right";
-        return_obj.x = (rect2.x+rect2.w);
+        return_obj.x = (rect2.x+rect2.w)+1;
         return_obj.y = rect1.y;
 
         return return_obj
       }else {
         return_obj.dir = "left";
-        return_obj.x = (rect2.x-rect1.w);
+        return_obj.x = (rect2.x-rect1.w)-1;
         return_obj.y = rect1.y;
 
         return return_obj

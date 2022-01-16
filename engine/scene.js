@@ -85,6 +85,24 @@ var scene = new function Scene() {
         return false;
     }
 
+    this.getAllObjects = function(constructor_name, ignore_list) {
+        let out = [];
+
+        if (ignore_list == undefined) {ignore_list = [undefined]};
+
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].constructor.name == constructor_name) {
+                for (let x = 0; x < ignore_list.length; x++) {
+                    if (ignore_list[x] != this.data[i]) {
+                        out.push(this.data[i]);
+                    }
+                }
+            }
+        }
+
+        return out;
+    }
+
     this.highlighted = undefined;
 
     this.click = function() {

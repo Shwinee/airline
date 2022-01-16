@@ -43,9 +43,20 @@ var engine = new function Engine() {
       this.ay = 0;
 
       if (!o.gravity) {
-        this.gravity = 0;
+        this.gravity = 'None';
       }else {
         this.gravity = o.gravity;
+      }
+
+      if (!o.max_x_speed) {
+        this.max_x_speed = 15;
+      }else {
+        this.max_x_speed = o.max_x_speed;
+      }
+      if (!o.max_y_speed) {
+        this.max_y_speed = 15;
+      }else {
+        this.max_y_speed = o.max_y_speed;
       }
 
       if (!o.friction) {
@@ -55,7 +66,19 @@ var engine = new function Engine() {
       }
       
       this.update = function(obj) {
-        obj.addForce(0, this.gravity);
+        if (obj.addForce) {
+          if (this.gravity != 'None') {
+            obj.addForce(0, this.gravity);
+          }
+        }
+
+        // if (this.dx > this.max_x_speed) {
+        //   this.dx = this.max_y_speed;
+        // }
+        // if (this.dy > this.max_y_speed) {
+        //   this.dy = this.max_y_speed;
+        // }
+
         obj.x += this.dx;
         obj.y += this.dy;
         this.dx *= this.friction;
@@ -89,8 +112,7 @@ var engine = new function Engine() {
       this.init = function(obj) {
         obj.collider = {}
 
-        obj.collider.on_collision = function(obj) {
-        }
+        obj.collider.on_collision = function(obj) {}
       }
 
       this.update = function(obj) {
@@ -99,28 +121,36 @@ var engine = new function Engine() {
             let allowed = true;
   
             for (let x = 0; x < this.ignore_list.length; x++) {
-              if (scene.data[i].constructor.name == this.ignore_list[x]) {
-                let allowed = false;
+              if (scene.data[i].constructor.name.toString() == this.ignore_list[x]) {
+                allowed = false;
               }
             }
-            
-            if (this.resolve == true) {
-              if (collideRectRect(obj.x, obj.y, obj.w, obj.h, scene.data[i].x, scene.data[i].y, scene.data[i].w, scene.data[i].h)) {
-                
-                let nobj = scene.data[scene.getFromId(obj.ENGINE_INFO.id)];
-                if (nobj.collider) {
-                  nobj.collider.on_collision({index: i, object: scene.data[i]});
-                }
 
-                let res = resolve_rect(obj, scene.data[i]);
-    
-                obj.x = res.x;
-                obj.y = res.y;
+            if (allowed == true) {
+              if (this.resolve == true) {
+                if (collideRectRect(obj.x, obj.y, obj.w, obj.h, scene.data[i].x, scene.data[i].y, scene.data[i].w, scene.data[i].h)) {
+                  
+                  let nobj = scene.data[scene.getFromId(obj.ENGINE_INFO.id)];
+                  if (nobj.collider) {
+                    nobj.collider.on_collision({index: i, object: scene.data[i]});
+                  }
   
-                // If object has physics collider
-                if (obj.addFriction) {
-                  obj.addForce(0, -obj.ENGINE_INFO.components.Physics_component.gravity);
-                  obj.addFriction();
+                  let res = resolve_rect(obj, scene.data[i]);
+      
+                  obj.x = res.x;
+                  obj.y = res.y;
+    
+                  // If object has physics collider
+                  if (obj.addFriction) {
+                    obj.addFriction();
+                    obj.addFriction();
+                    obj.addFriction();
+                    obj.addFriction();
+                    obj.addFriction();
+                    if (res.dir == 'above') {
+                      obj.addForce(0, -obj.ENGINE_INFO.components.Physics_component.gravity);
+                    }
+                  }
                 }
               }
             }
