@@ -13,28 +13,16 @@ function setup() {
         let orgx = ((i-((75-25)/2))+1)*(750);
         let h = random(50, 100);
         let orgy = (height/2)-(h/2)+(random(-500, 500))
-        // scene.add(new Island_tile(orgx, orgy, 'grass_1'));
-        // scene.add(new Island_tile(orgx+64, orgy, 'grass_2'));
-        // scene.add(new Island_tile(orgx+(64*2), orgy, 'grass_2'));
-        // scene.add(new Island_tile(orgx+(64*3), orgy, 'grass'));
-        // scene.add(new Island_tile(orgx+(64*4), orgy, 'grass'));
-        // scene.add(new Island_tile(orgx+(64*5), orgy, 'grass_3'));
-        // scene.add(new Island_tile(orgx+(64*5), orgy+64, 'corner_rl'));
-        // scene.add(new Island_tile(orgx+(64*4), orgy+64, 'bottom'));
-        // scene.add(new Island_tile(orgx+(64*3), orgy+64, 'corner_lr'));
         o = new Island(orgx, orgy, Math.floor(random(4, 7)), Math.floor(random(2, 4)))
         o.ENGINE_INFO = scene.make_object_info(o);
         o.ENGINE_INFO.id = i.toString();
         scene.add(o);
     }
-    // for (let i = 0; i < 50; i++) {
-    //     scene.add(new Empty(random(-(width*2), width*2), random(-(height*2), height*2), random(50, 200), random(50, 200)))
-    // }
 }
 
 function preload() {
-    add_sprites(['sprites/ground.png', 'sprites/grass.png', 'sprites/grass_4.png', 'sprites/bottom.png', 'sprites/grass_1.png', 'sprites/grass_2.png', 'sprites/grass_3.png', 'sprites/corner_lr.png', 'sprites/corner_rl.png'])
-    add_sounds(['sprites/boom.wav', 'sprites/locked.wav', 'sprites/flying.wav', 'sprites/grapple.wav', 'sprites/hurt.wav'])
+    add_sprites(['airline/sprites/ground.png', 'airline/sprites/grass.png', 'airline/sprites/grass_4.png', 'airline/sprites/bottom.png', 'airline/sprites/grass_1.png', 'airline/sprites/grass_2.png', 'airline/sprites/grass_3.png', 'airline/sprites/corner_lr.png', 'airline/sprites/corner_rl.png'])
+    add_sounds(['airline/sprites/boom.wav', 'airline/sprites/locked.wav', 'airline/sprites/flying.wav', 'airline/sprites/grapple.wav', 'airline/sprites/hurt.wav'])
 }
 
 function draw() {
