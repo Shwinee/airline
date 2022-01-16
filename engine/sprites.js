@@ -5,8 +5,8 @@ function add_sprites(arr) {
         let name = arr_arr[arr_arr.length-1];
         name = name.split('.')[0];
 
-        sprites[name] = loadImage(arr[i]);
         console.log(arr[i]);
+        sprites[name] = loadImage(arr[i]);
     }
 }
 var sounds = {}
