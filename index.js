@@ -21,8 +21,8 @@ function setup() {
 }
 
 function preload() {
-    add_sprites(['airline/sprites/ground.png', 'airline/sprites/grass.png', 'airline/sprites/grass_4.png', 'airline/sprites/bottom.png', 'airline/sprites/grass_1.png', 'airline/sprites/grass_2.png', 'airline/sprites/grass_3.png', 'airline/sprites/corner_lr.png', 'airline/sprites/corner_rl.png'])
-    add_sounds(['airline/sprites/boom.wav', 'airline/sprites/locked.wav', 'airline/sprites/flying.wav', 'airline/sprites/grapple.wav', 'airline/sprites/hurt.wav'])
+    add_sprites(['sprites/ground.png', 'sprites/grass.png', 'sprites/grass_4.png', 'sprites/bottom.png', 'sprites/grass_1.png', 'sprites/grass_2.png', 'sprites/grass_3.png', 'sprites/corner_lr.png', 'sprites/corner_rl.png'])
+    add_sounds(['sprites/boom.wav', 'sprites/locked.wav', 'sprites/flying.wav', 'sprites/grapple.wav', 'sprites/hurt.wav'])
 }
 
 function draw() {
