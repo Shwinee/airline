@@ -1,4 +1,6 @@
-const socket = io("https://bot-so-i-am-cool.herokuapp.com/", {
+// const io = require("socket.io-client");
+const socket = io("https://bot-so-i-am-cool.herokuapp.com", {
+  withCredentials: true,
   extraHeaders: {
     "my-custom-header": "abcd"
   }
