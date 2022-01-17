@@ -91,8 +91,8 @@ var engine = new function Engine() {
           obj.ENGINE_INFO.components.Physics_component.dy += y;
         }
         obj.addFriction = function() {
-          this.dx *= obj.ENGINE_INFO.components.Physics_component.friction;
-          this.dy *= obj.ENGINE_INFO.components.Physics_component.friction;
+          obj.ENGINE_INFO.components.Physics_component.dx *= obj.ENGINE_INFO.components.Physics_component.friction;
+          obj.ENGINE_INFO.components.Physics_component.dy *= obj.ENGINE_INFO.components.Physics_component.friction;
         }
       }
     },
@@ -109,10 +109,13 @@ var engine = new function Engine() {
         this.resolve = true;
       }
 
-      this.init = function(obj) {
-        obj.collider = {}
+      if (o.on_collision) {
+        this.on_collision = o.on_collision; 
+      }else {
+        this.on_collision = () => {};
+      }
 
-        obj.collider.on_collision = function(obj) {}
+      this.init = function(obj) {
       }
 
       this.update = function(obj) {
@@ -131,9 +134,8 @@ var engine = new function Engine() {
                 if (collideRectRect(obj.x, obj.y, obj.w, obj.h, scene.data[i].x, scene.data[i].y, scene.data[i].w, scene.data[i].h)) {
                   
                   let nobj = scene.data[scene.getFromId(obj.ENGINE_INFO.id)];
-                  if (nobj.collider) {
-                    nobj.collider.on_collision({index: i, object: scene.data[i]});
-                  }
+
+                  this.on_collision({index: i, object: scene.data[i]})
   
                   let res = resolve_rect(obj, scene.data[i]);
       

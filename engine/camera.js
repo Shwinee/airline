@@ -21,9 +21,9 @@ function Camera() {
         this.follow_object.x = x;
         this.follow_object.y = y;
     }
-
+    
     this.follow_object = {x: 0, y: 0}
-
+    
     this.addForce = function(x, y) {
         this.dx += x;
         this.dy += y;

@@ -301,8 +301,10 @@ var scene = new function Scene() {
         }
         for (let i = 0; i < this.data.length; i++) {
             this.data[i].render();
-            this.data[i].ENGINE_INFO.components.update();
-        }
+            if (this.data[i]) {
+                this.data[i].ENGINE_INFO.components.update();
+            }
+    }
         for (let i = 0; i < this.particles.length; i++) {
             this.particles[i].render();
         }
@@ -352,7 +354,7 @@ function Empty(x, y, w, h) {
     this.w = w;
     this.h = h;
     this.render = function() {
-        fill(50, 50, 50);
+        fill(50, 50, 50, 0);
         rect(this.x, this.y, this.w, this.h);
     }
 }
